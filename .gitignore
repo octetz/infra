@@ -1,0 +1,5 @@
+*.terraform
+*.retry
+*.tfstate*
+
+inventory.yml

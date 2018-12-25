@@ -1,0 +1,14 @@
+---
+- name: test
+  hosts: webservers
+  vars:
+    ansible_python_interpreter: "/usr/bin/python3"
+    public_key_location: "/home/josh/.ssh/authorized_keys"
+    user_password: ""
+    # python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.using(rounds=5000).hash(getpass.getpass())"
+  remote_user: ubuntu
+  become: yes
+  roles:
+  - role: ../roles/services
+  - role: ../roles/create-users
+  - role: ../roles/configure

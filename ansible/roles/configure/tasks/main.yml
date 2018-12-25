@@ -1,0 +1,32 @@
+---
+- name: clone github.com/octetz/octetz.com
+  git:
+    repo: https://github.com/octetz/octetz.com
+    dest: /tmp/octetz.com
+
+- name: copy nginx.conf to /etc/nginx/sites-available
+  copy:
+    src: /tmp/octetz.com/nginx.conf
+    dest: /etc/nginx/sites-available
+    remote_src: true
+
+- name: enable nginx.conf
+  file:
+    src: /etc/nginx/sites-available/nginx.conf
+    path: /etc/nginx/sites-enabled/nginx.conf
+    state: link
+
+- name: disable default
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: create octetz.com directory
+  file:
+    path: /var/www/html/octetz.com
+    state: directory
+
+- name: reload nginx
+  systemd:
+    name: nginx
+    state: reloaded

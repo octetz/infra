@@ -1,0 +1,23 @@
+---
+- name: update and upgrade
+  apt:
+    update_cache: yes
+    upgrade: yes
+
+- name: install nginx
+  apt:
+    name: nginx
+
+- name: add let's encrypt repo
+  apt_repository:
+    repo: ppa:certbot/certbot
+
+- name: install software-properties-common
+  apt:
+    name: software-properties-common
+
+- name: install certbot
+  apt:
+    update_cache: yes
+    name: python-certbot-nginx
+
