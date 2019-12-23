@@ -2,6 +2,13 @@ provider aws {
   region = "us-west-2"
 }
 
+data "aws_eip" "octetz" {
+  filter {
+    name   = "tag:owner"
+    values = ["octetz.com"]
+  }
+}
+
 resource "aws_vpc" "vpc" {
   cidr_block = "10.192.192.0/28"
 }
@@ -91,13 +98,18 @@ resource "aws_instance" "web" {
   ami                         = "${data.aws_ami.ubuntu.id}"
   instance_type               = "t2.micro"
   subnet_id                   = "${aws_subnet.subnet.id}"
-  key_name                    = "provisioning_key"
+  key_name                    = "octetz"
   associate_public_ip_address = true
   security_groups             = ["${aws_security_group.server_default.id}"]
 
   tags = {
     Name = "octetz"
   }
+}
+
+resource "aws_eip_association" "eip_assoc" {
+  instance_id   = "${aws_instance.web.id}"
+  allocation_id = "${data.aws_eip.octetz.id}"
 }
 
 output "ip" {

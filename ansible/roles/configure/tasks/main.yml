@@ -1,12 +1,17 @@
 ---
-- name: clone github.com/octetz/octetz.com
+- name: clone github.com/octetz/infra
   git:
-    repo: https://github.com/octetz/octetz.com
+    repo: https://github.com/octetz/infra
     dest: /tmp/octetz.com
+
+- name: clone github.com/octetz/octetz
+  git:
+    repo: https://github.com/octetz/octetz
+    dest: /home/octetz/octetz
 
 - name: copy nginx.conf to /etc/nginx/sites-available
   copy:
-    src: /tmp/octetz.com/nginx.conf
+    src: /tmp/octetz.com/nginx/nginx.conf
     dest: /etc/nginx/sites-available
     remote_src: true
 
