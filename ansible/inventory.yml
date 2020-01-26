@@ -3,4 +3,4 @@ all:
   children:
     webservers:
       hosts:
-        34.215.133.144
+        octetz.com
