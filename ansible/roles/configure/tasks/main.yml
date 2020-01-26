@@ -13,7 +13,7 @@
   copy:
     src: /tmp/octetz.com/nginx/nginx.conf
     dest: /etc/nginx/sites-available
-    force: no
+    force: yes
     remote_src: true
 
 - name: enable nginx.conf
